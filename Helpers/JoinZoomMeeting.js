@@ -165,7 +165,10 @@ exports.joinZoomMeeting = async function (name, proxy, meetingId, meetingPass, u
         '--ignore-certificate-errors',
         '--allow-running-insecure-content',
         '--start-maximized',
-        '--disable-notifications'
+        '--disable-notifications',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--single-process'
     ];
     if (proxy) {
         const proxyArg = proxy.startsWith('http') ? proxy : `http://${proxy}`;
@@ -178,6 +181,7 @@ exports.joinZoomMeeting = async function (name, proxy, meetingId, meetingPass, u
         // console.log(`[${name}] About to launch Chrome (Puppeteer)`);
         browser = await puppeteer.launch({
             headless: true, // Show browser window
+            executablePath: '/usr/bin/chromium', // Add this line for Docker
             args: args,
             defaultViewport: null
         });

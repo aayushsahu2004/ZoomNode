@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  zoombot:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+    volumes:
+      - ./name.txt:/app/name.txt:ro
+      - ./proxies.txt:/app/proxies.txt:ro
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    shm_size: 2gb
